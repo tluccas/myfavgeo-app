@@ -10,6 +10,11 @@ return new class extends Migration
     {
         Schema::create('pontos', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->text('descricao')->nullable();
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
+            $table->foreignId('mapa_id')->constrained('mapas')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -6,6 +6,8 @@ use App\Models\Mapa;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\DTOs\MapaDTO;
+
 use Exception;
 
 class MapaService{
@@ -19,10 +21,10 @@ class MapaService{
         return Mapa::with('pontos')->findOrFail($id);
     }
 
-    public function criarMapa(array $dados): Mapa{
+    public function criarMapa(MapaDTO $dados): Mapa{
         return DB::transaction(function () use ($dados) {
             try{
-                $mapa = Mapa::create($dados);
+                $mapa = Mapa::create($dados->toArray());
 
                 Log::info("Mapa criado com sucesso: ID {$mapa->id}");
                 return $mapa;
@@ -33,11 +35,11 @@ class MapaService{
         });
     }
 
-    public function atualizarMapa(int $id, array $dados): ?Mapa{
+    public function atualizarMapa(int $id, MapaDTO $dados): ?Mapa{
         return DB::transaction(function () use ($id, $dados) {
             $mapa = $this->buscarMapaPorId($id);
             try{
-                $mapa->update($dados);
+                $mapa->update($dados->toArray());
                 Log::info("Mapa atualizado com sucesso: ID {$mapa->id}");
                 return $mapa;
             }catch (Exception $e) {

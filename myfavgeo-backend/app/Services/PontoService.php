@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\PontoDTO;
 use App\Models\Ponto;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -19,10 +20,10 @@ class PontoService{
         return Ponto::with('mapa')->findOrFail($id);
     }
 
-    public function criarPonto(array $dados): Ponto{
+    public function criarPonto(PontoDTO $dados): Ponto{
         return DB::transaction(function () use ($dados){
             try{
-                $ponto = Ponto::create($dados);
+                $ponto = Ponto::create($dados->toArray());
 
                 Log::info("Ponto criado com sucesso: ID {$ponto->id}");
                 return $ponto;
@@ -33,11 +34,11 @@ class PontoService{
         });
     }
 
-    public function atualizarPonto(int $id, array $dados): ?Ponto{
+    public function atualizarPonto(int $id, PontoDTO $dados): ?Ponto{
         return DB::transaction(function () use ($id, $dados) {
             $ponto = $this->buscarPontoPorId($id);
             try{
-                $ponto->update($dados);
+                $ponto->update($dados->toArray());
                 Log::info("Ponto atualizado com sucesso: ID {$ponto->id}");
                 return $ponto;
             }catch (Exception $e) {

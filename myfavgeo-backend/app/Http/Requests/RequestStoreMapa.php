@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Request;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMapaRequest extends FormRequest
+class RequestStoreMapa extends FormRequest
 {
 
     public function authorize(): bool

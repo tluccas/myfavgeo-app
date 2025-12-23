@@ -31,7 +31,7 @@ class Mapa extends Model
     {
         return Attribute::make(
             get: fn (?string $value) => ucfirst($value ?? ''),
-            set: fn (string $value) => trim($value ?? ''),
+            set: fn (?string $value) => trim($value ?? ''),
         );
     }
 
@@ -53,6 +53,6 @@ class Mapa extends Model
         return str($this->descricao)->limit($limite);
     }
 
-    
+
 
 }

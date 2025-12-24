@@ -1,0 +1,33 @@
+# Laravel backend
+myfavgeo-backend/vendor/
+myfavgeo-backend/storage/
+myfavgeo-backend/storage/*.key
+myfavgeo-backend/.env
+myfavgeo-backend/.env.*
+myfavgeo-backend/public/storage
+myfavgeo-backend/bootstrap/cache/*.php
+myfavgeo-backend/node_modules/
+myfavgeo-backend/database/*.sqlite
+myfavgeo-backend/.phpunit.cache/
+
+# Frontend (Next.js) common ignores
+myfavgeo-frontend/node_modules/
+myfavgeo-frontend/.next/
+myfavgeo-frontend/.env*
+myfavgeo-frontend/.turbo/
+myfavgeo-frontend/out/
+myfavgeo-frontend/coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

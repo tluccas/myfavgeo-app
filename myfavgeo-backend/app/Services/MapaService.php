@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\DTOs\MapaDTO;
-
+use App\DTOs\UpdateMapaDTO;
 use Exception;
 
 class MapaService{
@@ -35,7 +35,7 @@ class MapaService{
         });
     }
 
-    public function atualizarMapa(int $id, MapaDTO $dados): ?Mapa{
+    public function atualizarMapa(int $id, UpdateMapaDTO $dados): ?Mapa{
         return DB::transaction(function () use ($id, $dados) {
             $mapa = $this->buscarMapaPorId($id);
             try{

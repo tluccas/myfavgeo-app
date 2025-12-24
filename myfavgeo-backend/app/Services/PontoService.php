@@ -7,6 +7,8 @@ use App\Models\Ponto;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\DTOs\UpdatePontoDTO;
+
 use Exception;
 
 class PontoService{
@@ -34,16 +36,13 @@ class PontoService{
         });
     }
 
-    public function atualizarPonto(int $id, PontoDTO $dados): ?Ponto{
+    public function atualizarPonto(int $id, UpdatePontoDTO $dados): ?Ponto{
         return DB::transaction(function () use ($id, $dados) {
             $ponto = $this->buscarPontoPorId($id);
             try{
                 $ponto->update($dados->toArray());
                 Log::info("Ponto atualizado com sucesso: ID {$ponto->id}");
                 return $ponto;
-            }catch (Exception $e) {
-                Log::error("Erro ao atualizar ponto ID {$id}: {$e->getMessage()}");
-                throw $e;
             }catch (Exception $e) {
                 Log::error("Erro ao atualizar ponto ID {$id}: {$e->getMessage()}");
                 throw $e;

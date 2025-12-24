@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateMapaRequest extends FormRequest
 {
@@ -18,5 +20,16 @@ class UpdateMapaRequest extends FormRequest
             'descricao' => ['sometimes', 'nullable','string'],
             'url_imagem' => ['sometimes', 'nullable', 'url'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'success' => false,
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

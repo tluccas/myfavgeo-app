@@ -49,7 +49,7 @@ export default function MapCard({
       </div>
 
       {/* Título */}
-      <h5 className="mb-2 text-xl font-semibold text-heading line-clamp-1">
+      <h5 className="mb-2 text-xl font-bold text-heading line-clamp-1">
         {nome}
       </h5>
 

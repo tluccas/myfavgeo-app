@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  /* =====================================================
+     LIGHT MODE
+     ===================================================== */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 252 15% 10%;
+
+    --primary: 265 30% 55%;        /* violeta acinzentado */
+    --secondary: 260 35% 95%;      /* lavanda clara */
+    --accent: 260 28% 85%;         /* roxo pastel */
+
+    --border: 260 20% 88%;
+    --muted: 260 10% 55%;
+
+    --radius: 0.5rem;
+
+    --font-sans: ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+      "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
+  /* =====================================================
+     DARK MODE
+     ===================================================== */
+  .dark {
+    --background: 252 18% 8%;
+    --foreground: 260 30% 95%;
+
+    --primary: 265 40% 72%;
+    --secondary: 255 20% 18%;
+    --accent: 260 25% 35%;
+
+    --border: 255 18% 25%;
+    --muted: 260 15% 65%;
+  }
+
+  /* =====================================================
+      BASE
+     ===================================================== */
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* =====================================================
+     SCROLLBAR
+     ===================================================== */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted) / 0.3);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted) / 0.45);
+  }
+}

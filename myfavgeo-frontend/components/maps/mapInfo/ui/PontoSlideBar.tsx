@@ -24,13 +24,13 @@ export default function PontoSlideBar({
       {/* Overlay para mobile*/}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/30 z-[1040] md:hidden transition-opacity"
+          className="fixed inset-0 bg-black/30 z-1040 md:hidden transition-opacity"
           onClick={onClose}
         />
       )}
 
       <div
-        className={`fixed top-0 left-0 h-full bg-[rgb(var(--secondary))] shadow-2xl z-[1050] 
+        className={`fixed top-0 left-0 h-full bg-[rgb(var(--secondary))] shadow-2xl z-1050 
           transition-transform duration-300 ease-in-out
           w-[85%] sm:w-80 p-4 flex flex-col ${
             isOpen ? "translate-x-0" : "-translate-x-full"
@@ -61,7 +61,7 @@ export default function PontoSlideBar({
               className="flex justify-between items-center border-b rounded-lg border-gray-300 py-3 md:py-2 hover:bg-gray-300/50 transition-colors px-2 gap-2"
             >
               {/* Nome */}
-              <span className="flex items-center shrink-0 font-medium max-w-[100px] sm:max-w-[120px]">
+              <span className="flex items-center shrink-0 font-medium max-w-100px sm:max-w-120px">
                 <Image
                   src={ponto.url_imagem || "/favicon.ico"}
                   alt={ponto.nome}

@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MapClickHandle from "./event/MapClickHandle";
 import L from "leaflet";
-import CreatePontModal from "./ui/CreatePointModal";
+import CreatePontModal from "./ui/CreatePontoModal";
 import { PontoDTO } from "@/lib/types/types";
 import api from "@/lib/api";
 import PontoSlideBar from "./ui/PontoSlideBar";

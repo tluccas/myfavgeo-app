@@ -28,14 +28,14 @@ export default function MapCard({
 
   return (
     <div
-      className="bg-neutral-primary-soft h-135 w-135 p-6 border border-gray-300 rounded-2xl shadow-xs flex flex-col hover:shadow-2xl duration-200 hover:scale-103 transition-transform ease-in hover:border-[rgb(var(--primary))]"
+      className="bg-neutral-primary-soft h-full w-full p-6 border border-gray-300 rounded-2xl shadow-xs flex flex-col hover:shadow-2xl duration-200 hover:scale-103 transition-transform ease-in hover:border-[rgb(var(--primary))]"
       onClick={handleOpenMap}
     >
       {/* Header */}
       <div className="flex justify-between h-6 overflow-hidden mb-3">
-        <h6 className="truncate">{nome}</h6>
+        <h6 className="truncate">MyFavGeo</h6>
         <span className="text-sm whitespace-nowrap">
-          <i className="bi bi-geo-fill not-italic" /> {pontos_count}
+          <i className="bi bi-geo-fill not-italic" /> {pontos_count} Pontos
         </span>
       </div>
 

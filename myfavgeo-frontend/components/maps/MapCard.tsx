@@ -40,7 +40,7 @@ export default function MapCard({
       </div>
 
       {/* Imagem */}
-      <div className="relative h-70 w-full rounded-2xl overflow-hidden mb-4">
+      <div className="relative h-52 w-full rounded-2xl overflow-hidden mb-4">
         {url_imagem ? (
           <Image src={url_imagem} alt={nome} fill className="object-cover" />
         ) : (

@@ -19,11 +19,13 @@ L.Icon.Default.mergeOptions({
 type MapViewProps = {
   center?: [number, number];
   zoom?: number;
+  mapaId: number;
 };
 
 export default function MapView({
   center = [-23.55052, -46.633308],
   zoom = 13,
+  mapaId,
 }: MapViewProps) {
   const [clickedPosition, setClickedPosition] = useState<
     [number, number] | null
@@ -38,8 +40,8 @@ export default function MapView({
   const fetchPontos = useCallback(async () => {
     try {
       setLoading(true);
-      // Nota: mapa_id fixo em 3 como no original
-      const res = await api.get("/mapas/3");
+
+      const res = await api.get(`/mapas/${mapaId}`);
       // Ajustar conforme a estrutura da resposta se mudar (Já está OK)
       setPontos(res.data.data?.pontos);
     } catch (error) {

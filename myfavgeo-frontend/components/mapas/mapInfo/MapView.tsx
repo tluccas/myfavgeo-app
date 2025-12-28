@@ -1,5 +1,8 @@
 "use client";
+
+import { useRef } from "react";
 import { useEffect, useState, useCallback } from "react";
+import { Map as LeafletMap } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MapClickHandle from "./event/MapClickHandle";
 import L from "leaflet";
@@ -35,6 +38,7 @@ export default function MapView({
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mapaNome, setMapaNome] = useState("");
+  const mapaRef = useRef<LeafletMap>(null);
 
   // Busca de pontos
   const fetchPontos = useCallback(async () => {
@@ -50,6 +54,21 @@ export default function MapView({
       setLoading(false);
     }
   }, [mapaId]);
+
+
+  // Função para focar em um ponto selecionado
+  function focusOnPonto(ponto: PontoDTO) {
+    if (!mapaRef.current) return;
+
+    mapaRef.current.flyTo(
+      [ponto.latitude, ponto.longitude],
+      17,
+      {
+        animate: true,
+        duration: 0.8,
+      }
+    )
+  }
 
   const fetchMapaNome = useCallback(async () => {
     try {
@@ -136,6 +155,7 @@ export default function MapView({
         zoom={zoom}
         scrollWheelZoom
         className="w-full h-full z-0"
+        ref={mapaRef}
       >
         <TileLayer
           attribution="&copy; OpenStreetMap"
@@ -172,6 +192,10 @@ export default function MapView({
         onClose={() => setIsSidebarOpen(false)}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onSelect={(ponto) => {
+          focusOnPonto(ponto)
+          setIsSidebarOpen(false);
+        }}
       />
 
       {/* Modal de Criação */}

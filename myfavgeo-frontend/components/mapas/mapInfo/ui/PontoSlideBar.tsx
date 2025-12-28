@@ -6,6 +6,7 @@ type PointsSidebarProps = {
   pontos: PontoDTO[];
   onEdit: (ponto: PontoDTO) => void;
   onDelete: (pontoId: number) => void;
+  onSelect: (ponto: PontoDTO) => void;
   isOpen: boolean;
   onClose: () => void;
   mapaNome: string;
@@ -15,6 +16,7 @@ export default function PontoSlideBar({
   pontos,
   onEdit,
   onDelete,
+  onSelect,
   isOpen,
   onClose,
   mapaNome,
@@ -59,6 +61,7 @@ export default function PontoSlideBar({
             <li
               key={ponto.id}
               className="flex justify-between items-center border-b rounded-lg border-gray-300 py-3 md:py-2 hover:bg-gray-300/50 transition-colors px-2 gap-2"
+              onClick={() => onSelect(ponto)}
             >
               {/* Nome */}
               <span className="flex items-center shrink-0 font-medium max-w-100px sm:max-w-120px">
@@ -69,25 +72,33 @@ export default function PontoSlideBar({
                   height={20}
                   className="w-5 h-5 object-cover rounded-full mr-2"
                 />
-                <span className="truncate text-sm">{ponto.nome}</span>
+                <span className="truncate text-sm select-none">
+                  {ponto.nome}
+                </span>
               </span>
 
               {/* Descrição */}
-              <p className="text-xs text-gray-500 truncate flex-1 min-w-0 text-left">
+              <p className="text-xs text-gray-500 truncate flex-1 min-w-0 text-left select-none">
                 {ponto.descricao}
               </p>
 
               {/* Botões */}
               <div className="flex gap-2 shrink-0 ml-auto">
                 <button
-                  onClick={() => onEdit(ponto)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Corrige para evitar o disparo do onClick do li 
+                    onEdit(ponto);
+                  }}
                   className="text-[rgb(var(--primary))] p-1 hover:scale-110 transition-transform"
                   aria-label="Editar ponto"
                 >
                   <i className="bi bi-pencil"></i>
                 </button>
                 <button
-                  onClick={() => onDelete(ponto.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(ponto.id);
+                  }}
                   className="text-red-500 p-1 hover:scale-110 transition-transform"
                   aria-label="Excluir ponto"
                 >

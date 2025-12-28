@@ -38,7 +38,7 @@ export default function Header() {
               Home
             </Link>
             <Link
-              href="/maps"
+              href="/mapas"
               className={`${navLinkBase} bg-primary text-primary border border-gray-300 rounded-4xl btn-hover-primary shadow-sm`}
             >
               Meus Mapas
@@ -76,7 +76,7 @@ export default function Header() {
             Home
           </Link>
           <Link
-            href="/maps"
+            href="/mapas"
             onClick={() => setIsMenuOpen(false)}
             className={`${navLinkBase} bg-primary text-primary hover:bg-gray-300 rounded-3xl py-4`}
           >

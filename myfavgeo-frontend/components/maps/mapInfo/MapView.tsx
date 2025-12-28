@@ -49,16 +49,16 @@ export default function MapView({
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [mapaId]);
 
   const fetchMapaNome = useCallback(async () => {
     try {
-      const res = await api.get("/mapas/3");
+      const res = await api.get(`/mapas/${mapaId}`);
       setMapaNome(res.data.data.nome || "Desconhecido");
     } catch (error) {
       console.error("Erro ao buscar nome do mapa:", error);
     }
-  }, []);
+  }, [mapaId]);
 
   useEffect(() => {
     fetchMapaNome();
@@ -181,7 +181,7 @@ export default function MapView({
           onClose={handleModalClose}
           latitude={clickedPosition[0]}
           longitude={clickedPosition[1]}
-          mapa_id={3}
+          mapa_id={mapaId}
         />
       )}
     </div>

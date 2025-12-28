@@ -48,6 +48,11 @@ export default function MapView({
       const res = await api.get(`/mapas/${mapaId}`);
       // Ajustar conforme a estrutura da resposta se mudar (Já está OK)
       setPontos(res.data.data?.pontos);
+
+      if (res.data.data?.pontos.length > 0){
+        focusOnPonto(res.data.data.pontos[0]);
+      }
+      
     } catch (error) {
       console.error("Erro ao buscar pontos:", error);
     } finally {

@@ -40,8 +40,8 @@ export default function MapView({
       setLoading(true);
       // Nota: mapa_id fixo em 3 como no original
       const res = await api.get("/mapas/3");
-      // Ajuste conforme a estrutura da sua API (res.data.data.pontos ou apenas res.data.pontos)
-      setPontos(res.data.data?.pontos || res.data.pontos || []);
+      // Ajustar conforme a estrutura da resposta se mudar (Já está OK)
+      setPontos(res.data.data?.pontos);
     } catch (error) {
       console.error("Erro ao buscar pontos:", error);
     } finally {
@@ -67,6 +67,7 @@ export default function MapView({
   }, [fetchPontos]);
 
   // Handlers
+  // Atualizar modal para aceitar edição de ponto (apenas Nome e Descrição)
   const handleEdit = (ponto: PontoDTO) => {
     console.log("Editar ponto:", ponto);
   };
@@ -93,7 +94,7 @@ export default function MapView({
   };
   return (
 
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-[calc(100vh-4rem)] overflow-hidden">
       {/* Caixa de instrução */}
       <div
         className="absolute top-4 right-4 md:left-auto md:right-14 z-1001 

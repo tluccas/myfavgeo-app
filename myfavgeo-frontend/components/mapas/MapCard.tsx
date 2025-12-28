@@ -23,7 +23,7 @@ export default function MapCard({
   const router = useRouter();
 
   function handleOpenMap() {
-    router.push(`/maps/${id}`);
+    router.push(`/mapas/${id}`);
   }
 
   return (

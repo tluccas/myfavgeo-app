@@ -30,7 +30,7 @@ export default function PontoSlideBar({
       )}
 
       <div
-        className={`fixed top-0 left-0 h-full bg-[rgb(var(--secondary))] shadow-2xl z-1050 
+        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] bg-[rgb(var(--secondary))] shadow-2xl z-1050 
           transition-transform duration-300 ease-in-out
           w-[85%] sm:w-80 p-4 flex flex-col ${
             isOpen ? "translate-x-0" : "-translate-x-full"

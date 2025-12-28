@@ -51,8 +51,9 @@ export default function MapView({
 
       if (res.data.data?.pontos.length > 0){
         focusOnPonto(res.data.data.pontos[0]);
+        setIsSidebarOpen(false);
       }
-      
+
     } catch (error) {
       console.error("Erro ao buscar pontos:", error);
     } finally {

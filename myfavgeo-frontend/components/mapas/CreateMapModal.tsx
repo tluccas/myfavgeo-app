@@ -40,7 +40,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
         <h2 className="text-xl font-bold mb-4">Criar novo mapa</h2>
 
@@ -52,7 +52,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             required
-            className="w-full border border-border bg-background rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+            className="w-full border border-border bg-background text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
           />
 
           {/* Descrição */}
@@ -60,7 +60,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             placeholder="Descrição (opcional)"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
-            className="w-full border border-border bg-background rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+            className="w-full border border-border bg-background text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
             rows={3}
           />
 
@@ -70,7 +70,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             placeholder="URL da imagem (opcional)"
             value={urlImagem}
             onChange={(e) => setUrlImagem(e.target.value)}
-            className="w-full border border-border bg-background rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+            className="w-full border border-border bg-background text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
           />
 
           {/* Ações */}

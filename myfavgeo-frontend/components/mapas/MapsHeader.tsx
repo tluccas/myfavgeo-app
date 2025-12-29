@@ -1,11 +1,10 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
-import CreateMapModal from './CreateMapModal';
+import { useState } from "react";
+import CreateMapModal from "./CreateMapModal";
 
 export function MapsHeader() {
   const [open, setOpen] = useState(false);
-
 
   return (
     <header className="mb-8 flex flex-col gap-4 items-center justify-between sm:flex-row sm:items-center sm:justify-between">
@@ -22,12 +21,12 @@ export function MapsHeader() {
         onClick={() => setOpen(true)}
         className="
         rounded-lg
-        bg-neutral-secondary-medium 
+        bg-primary 
         border 
         border-gray-300
         px-4 py-2
         text-sm font-medium
-        text-background
+        text-white
         transition
         btn-hover-primary
         flex items-center gap-2
@@ -39,5 +38,4 @@ export function MapsHeader() {
       <CreateMapModal open={open} onClose={() => setOpen(false)} />
     </header>
   );
-
 }

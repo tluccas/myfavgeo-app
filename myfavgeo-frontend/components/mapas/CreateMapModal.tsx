@@ -40,8 +40,8 @@ export default function CreateMapModal({ open, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-2xl w-full max-w-md p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
         <h2 className="text-xl font-bold mb-4">Criar novo mapa</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -52,7 +52,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             required
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-border bg-background rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
           />
 
           {/* Descrição */}
@@ -60,7 +60,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             placeholder="Descrição (opcional)"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-border bg-background rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
             rows={3}
           />
 
@@ -70,7 +70,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             placeholder="URL da imagem (opcional)"
             value={urlImagem}
             onChange={(e) => setUrlImagem(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-border bg-background rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
           />
 
           {/* Ações */}
@@ -79,7 +79,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 btn-hover-secondary"
+              className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
             >
               Cancelar
             </button>
@@ -87,7 +87,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
             <button
               type="submit"
               disabled={loading || !nome.trim()}
-              className="px-4 py-2 text-sm rounded-lg bg-[rgb(var(--primary))] text-white hover:opacity-90 disabled:opacity-50 btn-hover-primary"
+              className="px-4 py-2 text-sm rounded-lg bg-primary text-white hover:opacity-90 disabled:opacity-50 btn-hover-primary transition-all"
             >
               {loading ? "Criando..." : "Criar mapa"}
             </button>

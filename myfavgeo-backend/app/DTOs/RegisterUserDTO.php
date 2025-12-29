@@ -5,7 +5,7 @@ namespace App\DTOs;
 readonly class RegisterUserDTO
 {
     public function __construct(
-        public string $name,
+        public string $nome,
         public string $email,
         public string $password,
     ) {}
@@ -13,7 +13,7 @@ readonly class RegisterUserDTO
     public static function fromRequest(array $validated): self
     {
         return new self(
-            name: $validated['name'],
+            nome: $validated['nome'],
             email: $validated['email'],
             password: $validated['password'],
         );
@@ -22,7 +22,7 @@ readonly class RegisterUserDTO
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
+            'name' => $this->nome,
             'email' => $this->email,
             'password' => $this->password,
         ];

@@ -22,7 +22,7 @@ readonly class RegisterUserDTO
     public function toArray(): array
     {
         return [
-            'name' => $this->nome,
+            'nome' => $this->nome,
             'email' => $this->email,
             'password' => $this->password,
         ];

@@ -62,23 +62,5 @@ class MapaController extends Controller
 
         return $this->sendResponse(null, 'Mapa deletado com sucesso.');
     }
-
-    // ✅ Adicione estes métodos
-    protected function sendResponse($data, $message, $code = 200)
-    {
-        return response()->json([
-            'success' => true,
-            'message' => $message,
-            'data' => $data
-        ], $code);
-    }
-
-    protected function sendError($message, $errors = [], $code = 404)
-    {
-        return response()->json([
-            'success' => false,
-            'message' => $message,
-            'errors' => $errors
-        ], $code);
-    }
+    
 }

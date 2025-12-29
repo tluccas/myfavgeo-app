@@ -59,7 +59,7 @@ export default function CreatePontModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
           <i className="bi bi-geo-fill text-primary"></i> Adicionar novo ponto

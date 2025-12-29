@@ -1,13 +1,18 @@
-import { APIResponse, MapaDTO } from "@/lib/types/types";
-import api from "@/lib/api";
 import "@/app/globals.css";
 import { MapList } from "@/components/mapas/MapList";
 import { MapsHeader } from "@/components/mapas/MapsHeader";
 import { BackgroundBlobs } from "@/components/layout/Home/BackgroundBlobs";
+import { getMapas } from "@/lib/mapas/get-mapas";
+import { redirect } from "next/navigation";
 
 export default async function MapasPage() {
-  const response = await api.get<APIResponse<MapaDTO[]>>("mapas/");
-  const mapas = response.data;
+  let response;
+
+  try {
+    response = await getMapas();
+  } catch {
+    redirect("/login");
+  }
 
   return (
     <main className="min-h-screen px-6 py-8 text-foreground relative overflow-hidden">
@@ -16,7 +21,7 @@ export default async function MapasPage() {
         <MapsHeader />
 
         <section className="">
-          <MapList mapas={mapas.data} />
+          <MapList mapas={response.data} />
         </section>
       </div>
     </main>

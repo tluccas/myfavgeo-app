@@ -13,27 +13,27 @@ use Exception;
 
 class MapaService{
 
-    public function listarMapas(): Collection
+    public function listarMapas(int $userId): Collection
     {
-        return Mapa::doUsuario(Auth::guard('api')->id())
+        return Mapa::doUsuario($userId)
             ->withCount('pontos')
             ->get();
     }
 
-    public function buscarMapaPorId(int $id): Mapa
+    public function buscarMapaPorId(int $id, int $userId): Mapa
     {
-        return Mapa::doUsuario(Auth::guard('api')->id())
+        return Mapa::doUsuario($userId)
             ->with('pontos')
             ->findOrFail($id);
     }
 
-    public function criarMapa(MapaDTO $dados): Mapa
+    public function criarMapa(MapaDTO $dados, int $userId): Mapa
     {
         try {
-            return DB::transaction(function () use ($dados) {
+            return DB::transaction(function () use ($dados, $userId) {
                 $mapa = Mapa::create(array_merge(
                     $dados->toArray(),
-                    ['user_id' => Auth::guard('api')->id()]
+                    ['user_id' => $userId]
                 ));
 
                 Log::info("Mapa criado com sucesso: ID {$mapa->id}");
@@ -46,10 +46,10 @@ class MapaService{
         }
     }
 
-    public function atualizarMapa(int $id, UpdateMapaDTO $dados): Mapa
+    public function atualizarMapa(int $id, UpdateMapaDTO $dados, int $userId): Mapa
     {
-        return DB::transaction(function () use ($id, $dados) {
-            $mapa = $this->buscarMapaPorId($id);
+        return DB::transaction(function () use ($id, $dados, $userId) {
+            $mapa = $this->buscarMapaPorId($id, $userId);
 
             try {
                 $mapa->update($dados->toArray());
@@ -67,10 +67,10 @@ class MapaService{
         });
     }
 
-    public function deletarMapa(int $id): bool
+    public function deletarMapa(int $id, int $userId): bool
     {
-        return DB::transaction(function () use ($id) {
-            $mapa = $this->buscarMapaPorId($id);
+        return DB::transaction(function () use ($id, $userId) {
+            $mapa = $this->buscarMapaPorId($id, $userId);
 
             try {
                 return $mapa->delete();

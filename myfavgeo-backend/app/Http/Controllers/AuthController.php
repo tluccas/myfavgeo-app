@@ -30,10 +30,10 @@ class AuthController extends Controller
                 60,           // minutos (mudar depois?)
                 '/',          // path
                 null,         // dominio
-                true,         // HTTPS
+                false,         // HTTPS
                 true,         // httpOnly
                 false,        // raw
-                'none'        // sameSite
+                'lax'        // sameSite
             );
     }
 
@@ -51,10 +51,10 @@ class AuthController extends Controller
                 60,           // minutos (mudar depois?)
                 '/',          // path
                 null,         // dominio
-                true,         // HTTPS
+                false,         // HTTPS
                 true,         // httpOnly
                 false,        // raw
-                'none'        // sameSite
+                'lax'        // sameSite
             );
 
     }

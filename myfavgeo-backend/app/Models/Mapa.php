@@ -16,6 +16,7 @@ class Mapa extends Model
         'nome',
         'descricao',
         'url_imagem',
+        'user_id',
     ];
 
 

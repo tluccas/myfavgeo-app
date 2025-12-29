@@ -73,7 +73,7 @@ export default function MapCard({
             <i className="bi bi-map text-6xl" />
           </div>
         )}
-        
+
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
       </div>
@@ -97,7 +97,8 @@ export default function MapCard({
           <i className="bi bi-clock" /> {timeAgo(atualizadoEm)}
         </p>
 
-        <button className="
+        <button
+          className="
           inline-flex items-center gap-2
           px-4 py-2
           rounded-full
@@ -106,7 +107,8 @@ export default function MapCard({
           transition-all
           group-hover:bg-primary group-hover:text-white
           shadow-sm
-        ">
+        "
+        >
           Ver Mapa
           <i className="bi bi-arrow-right transition-transform group-hover:translate-x-1" />
         </button>

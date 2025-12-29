@@ -57,7 +57,7 @@
     --primary: 173 155 212;
     --secondary: 41 37 55;
     --accent: 75 67 112;
-    
+
     --border: 53 52 75;
     --muted: 157 152 179;
   }
@@ -114,8 +114,8 @@
   }
 
   .btn-hover-secondary {
-    @apply hover:bg-gray-300
-      hover:text-white
+    @apply hover:bg-accent
+      hover:text-primary
       hover:shadow-lg 
       hover:cursor-pointer
       hover:scale-105

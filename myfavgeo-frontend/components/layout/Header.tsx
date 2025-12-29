@@ -34,7 +34,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-3">
             <Link
               href="/"
-              className={`${navLinkBase} bg-secondary text-primary border-gray-300 border rounded-3xl hover:text-black btn-hover-secondary`}
+              className={`${navLinkBase} bg-secondary text-primary border-border border rounded-3xl btn-hover-secondary`}
             >
               Home
             </Link>

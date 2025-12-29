@@ -11,9 +11,10 @@ use App\DTOs\UpdateMapaDTO;
 
 class MapaService
 {
-    public function listarMapas(): Collection
+    public function listarMapas(int $userId): Collection
     {
-        return Mapa::withCount('pontos')->get();
+        return Mapa::doUsuario($userId)->
+        withCount('pontos')->get();
     }
 
     public function buscarMapaPorId(int $id): Mapa
@@ -39,6 +40,7 @@ class MapaService
 
     public function deletarMapa(Mapa $mapa): bool
     {
+        
         return $mapa->delete();
     }
 }

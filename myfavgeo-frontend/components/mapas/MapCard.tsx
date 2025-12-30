@@ -11,6 +11,8 @@ type MapCardProps = {
   url_imagem: string;
   pontos_count: number;
   atualizadoEm: string;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 export default function MapCard({
   id,
@@ -19,6 +21,8 @@ export default function MapCard({
   url_imagem,
   pontos_count,
   atualizadoEm,
+  onEdit,
+  onDelete,
 }: MapCardProps) {
   const router = useRouter();
 
@@ -76,6 +80,53 @@ export default function MapCard({
 
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+
+        {/* Botões (Edit/Delete) */}
+        <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+          {onEdit && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit();
+              }}
+              className="rounded-fullinline-flex items-center gap-2
+                px-4 py-2
+                rounded-full
+                text-xs font-semibold
+                bg-secondary text-foreground
+                transition-all
+                group-hover:bg-primary group-hover:text-white
+                shadow-sm
+                hover:cursor-pointer
+                hover:scale-105"
+              title="Editar mapa"
+            >
+              <i className="bi bi-pencil-fill text-sm" />
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              className="rounded-fullinline-flex items-center gap-2
+                px-4 py-2
+                rounded-full
+                text-xs font-semibold
+                bg-secondary text-foreground
+                transition-all
+                group-hover:bg-primary 
+                group-hover:text-white
+                shadow-sm
+                hover:cursor-pointer
+                hover:scale-105"
+              title="Excluir mapa"
+            >
+              <i className="bi bi-trash-fill text-sm" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Título */}

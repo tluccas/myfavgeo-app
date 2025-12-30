@@ -2,18 +2,16 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
     password: "",
-    confirm_password: "",
+    password_confirmation: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,8 +38,8 @@ export default function RegisterPage() {
       errors.password = "A senha deve ter no mínimo 6 caracteres";
     }
 
-    if (formData.password !== formData.confirm_password) {
-      errors.confirm_password = "As senhas não coincidem";
+    if (formData.password !== formData.password_confirmation) {
+      errors.password_confirmation = "As senhas não coincidem";
     }
 
     setFieldErrors(errors);
@@ -139,16 +137,16 @@ export default function RegisterPage() {
             />
 
             <Input
-              id="confirm_password"
-              name="confirm_password"
+              id="password_confirmation"
+              name="password_confirmation"
               type="password"
               autoComplete="new-password"
               required
               label="Confirmar Senha"
               placeholder="••••••••"
-              value={formData.confirm_password}
+              value={formData.password_confirmation}
               onChange={handleChange}
-              error={fieldErrors.confirm_password}
+              error={fieldErrors.password_confirmation}
             />
           </div>
 

@@ -14,6 +14,32 @@ class MapaController extends Controller
 {
     public function __construct(protected MapaService $mapaService) {}
 
+    /**
+    * @OA\Get(
+    *     path="/api/mapas",
+    *     summary="Listar todos os mapas",
+    *     tags={"Mapas"},
+    *     @OA\Response(
+    *         response=200,
+    *         description="Lista de mapas recuperada com sucesso",
+    *         @OA\JsonContent(
+    *             allOf={
+    *                 @OA\Schema(ref="#/components/schemas/ApiSuccess"),
+    *                 @OA\Schema(
+    *                     @OA\Property(
+    *                         property="data",
+    *                         type="array",
+    *                         @OA\Items(ref="#/components/schemas/Mapa")
+    *                     )
+    *                 )
+    *             }
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=500,
+    *
+    * )
+    */
     public function index()
     {
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import CreateMapModal from "./CreateMapModal";
+import FormMapModal from "./FormMapModal";
 
 export function MapsHeader() {
   const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ export function MapsHeader() {
         Criar mapa <i className="bi bi-plus-lg" />
       </button>
 
-      <CreateMapModal
+      <FormMapModal
         open={open}
         onClose={() => setOpen(false)}
         onSuccess={() => {

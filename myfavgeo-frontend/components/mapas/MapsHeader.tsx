@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import CreateMapModal from "./CreateMapModal";
 
 export function MapsHeader() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <header className="mb-8 flex flex-col gap-4 items-center justify-between sm:flex-row sm:items-center sm:justify-between">
@@ -35,7 +37,14 @@ export function MapsHeader() {
         Criar mapa <i className="bi bi-plus-lg" />
       </button>
 
-      <CreateMapModal open={open} onClose={() => setOpen(false)} />
+      <CreateMapModal
+        open={open}
+        onClose={() => setOpen(false)}
+        onSuccess={() => {
+          setOpen(false);
+          router.refresh();
+        }}
+      />
     </header>
   );
 }

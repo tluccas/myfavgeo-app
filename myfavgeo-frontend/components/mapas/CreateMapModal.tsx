@@ -6,9 +6,10 @@ import api from "@/lib/api";
 type Props = {
   open: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 };
 
-export default function CreateMapModal({ open, onClose }: Props) {
+export default function CreateMapModal({ open, onClose, onSuccess }: Props) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [urlImagem, setUrlImagem] = useState("");
@@ -30,7 +31,12 @@ export default function CreateMapModal({ open, onClose }: Props) {
         url_imagem: urlImagem.trim() || null,
       });
 
-      onClose();
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        onClose();
+      }
+
       setNome("");
       setDescricao("");
       setUrlImagem("");
@@ -40,7 +46,7 @@ export default function CreateMapModal({ open, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-1200 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
         <h2 className="text-xl font-bold mb-4">Criar novo mapa</h2>
 

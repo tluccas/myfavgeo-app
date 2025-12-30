@@ -14,12 +14,12 @@ export default function Loading() {
   };
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-background ">
-      <div className="flex flex-col items-center gap-4">
-        <div className="pointer-events-none">
-          <Lottie options={defaultOptions} height={"auto"} width={400} />
+    <div className="flex min-h-[calc(100vh-5rem)] w-full items-center justify-center bg-background px-4 mb-8">
+      <div className="flex flex-col items-center gap-2 sm:gap-4 text-center">
+        <div className="pointer-events-none w-full max-w-250px sm:max-w-300px">
+          <Lottie options={defaultOptions} height={"auto"} width={"100%"} />
         </div>
-        <p className="text-lg font-medium text-muted-foreground animate-pulse">
+        <p className="text-base sm:text-lg font-medium text-muted-foreground animate-pulse">
           Aguarde enquanto preparamos sua experiência...
         </p>
       </div>

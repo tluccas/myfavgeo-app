@@ -7,12 +7,37 @@ use App\DTOs\UpdateMapaDTO;
 use App\Http\Requests\RequestStoreMapa;
 use App\Http\Requests\UpdateMapaRequest;
 use App\Services\MapaService;
-use Illuminate\Http\Request;
 
 class MapaController extends Controller
 {
     public function __construct(protected MapaService $mapaService) {}
 
+    /**
+    * @OA\Get(
+    *     path="/api/mapas",
+    *     summary="Listar todos os mapas",
+    *     tags={"Mapas"},
+    *     @OA\Response(
+    *         response=200,
+    *         description="Lista de mapas recuperada com sucesso",
+    *         @OA\JsonContent(
+    *             allOf={
+    *                 @OA\Schema(ref="#/components/schemas/ApiSuccess"),
+    *                 @OA\Schema(
+    *                     @OA\Property(
+    *                         property="data",
+    *                         type="array",
+    *                         @OA\Items(ref="#/components/schemas/Mapa")
+    *                     )
+    *                 )
+    *             }
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=500,
+    *
+    * )
+    */
     public function index()
     {
         $mapa = $this->mapaService->listarMapas();
@@ -63,22 +88,4 @@ class MapaController extends Controller
         return $this->sendResponse(null, 'Mapa deletado com sucesso.');
     }
 
-    // ✅ Adicione estes métodos
-    protected function sendResponse($data, $message, $code = 200)
-    {
-        return response()->json([
-            'success' => true,
-            'message' => $message,
-            'data' => $data
-        ], $code);
-    }
-
-    protected function sendError($message, $errors = [], $code = 404)
-    {
-        return response()->json([
-            'success' => false,
-            'message' => $message,
-            'errors' => $errors
-        ], $code);
-    }
 }

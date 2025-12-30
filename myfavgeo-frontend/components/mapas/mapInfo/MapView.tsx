@@ -39,6 +39,7 @@ export default function MapView({
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mapaNome, setMapaNome] = useState("");
   const mapaRef = useRef<LeafletMap>(null);
+  const isFirstLoad = useRef(true);
 
   // Busca de pontos
   const fetchPontos = useCallback(async () => {
@@ -49,11 +50,11 @@ export default function MapView({
       // Ajustar conforme a estrutura da resposta se mudar (Já está OK)
       setPontos(res.data.data?.pontos);
 
-      if (res.data.data?.pontos.length > 0){
+      if (isFirstLoad.current && res.data.data?.pontos.length > 0) {
         focusOnPonto(res.data.data.pontos[0]);
         setIsSidebarOpen(false);
+        isFirstLoad.current = false;
       }
-
     } catch (error) {
       console.error("Erro ao buscar pontos:", error);
     } finally {
@@ -61,19 +62,14 @@ export default function MapView({
     }
   }, [mapaId]);
 
-
   // Função para focar em um ponto selecionado
   function focusOnPonto(ponto: PontoDTO) {
     if (!mapaRef.current) return;
 
-    mapaRef.current.flyTo(
-      [ponto.latitude, ponto.longitude],
-      17,
-      {
-        animate: true,
-        duration: 0.8,
-      }
-    )
+    mapaRef.current.flyTo([ponto.latitude, ponto.longitude], 17, {
+      animate: true,
+      duration: 0.8,
+    });
   }
 
   const fetchMapaNome = useCallback(async () => {
@@ -120,12 +116,11 @@ export default function MapView({
     fetchPontos(); // Recarrega a lista
   };
   return (
-
     <div className="relative w-full h-[calc(100vh-4rem)] overflow-hidden">
       {/* Caixa de instrução */}
       <div
         className="absolute top-4 right-4 md:left-auto md:right-14 z-1001 
-      bg-white/95 backdrop-blur-sm text-black px-4 py-2 rounded shadow-lg border border-gray-300 
+      bg-background/95 backdrop-blur-sm text-foreground px-4 py-2 rounded shadow-lg border border-border 
       text-sm md:text-base text-center pointer-events-none"
       >
         <i className="bi bi-hand-index-thumb mr-2"></i>
@@ -139,9 +134,9 @@ export default function MapView({
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="absolute bottom-6 left-4 md:left-14 z-1001
-        bg-white text-black px-5 py-3 md:px-4 md:py-2 
-        rounded-full md:rounded shadow-xl border border-gray-300 
-        hover:bg-gray-100 active:scale-95 transition-all font-medium"
+        bg-background text-foreground px-5 py-3 md:px-4 md:py-2 
+        rounded-full md:rounded shadow-xl border border-border 
+        hover:bg-secondary active:scale-95 transition-all font-medium"
       >
         {isSidebarOpen ? "✕ Fechar Lista" : "☰ Ver Pontos"}
       </button>
@@ -199,7 +194,7 @@ export default function MapView({
         onEdit={handleEdit}
         onDelete={handleDelete}
         onSelect={(ponto) => {
-          focusOnPonto(ponto)
+          focusOnPonto(ponto);
           setIsSidebarOpen(false);
         }}
       />

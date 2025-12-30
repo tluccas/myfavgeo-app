@@ -16,6 +16,7 @@ class Mapa extends Model
         'nome',
         'descricao',
         'url_imagem',
+        'user_id',
     ];
 
 
@@ -48,9 +49,20 @@ class Mapa extends Model
         return $this->hasMany(Ponto::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getResumo(int $limite = 50): string
     {
         return str($this->descricao)->limit($limite);
+    }
+
+    // Scope para filtrar mapas pelo usuário
+    public function scopeDoUsuario($query, int $userId)
+    {
+        return $query->where('user_id', $userId);
     }
 
 

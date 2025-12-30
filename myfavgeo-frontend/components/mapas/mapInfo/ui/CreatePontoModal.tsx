@@ -59,14 +59,14 @@ export default function CreatePontModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-2xl w-full max-w-md p-6">
+    <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+      <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-          <i className="bi bi-geo-fill"></i> Adicionar novo ponto
+          <i className="bi bi-geo-fill text-primary"></i> Adicionar novo ponto
         </h2>
 
         {/* Mini mapa */}
-        <div className="w-full h-48 rounded-lg overflow-hidden border border-gray-300 mb-4">
+        <div className="w-full h-48 rounded-lg overflow-hidden border border-border mb-4">
           <MapContainer
             center={[latitude, longitude]}
             zoom={16}
@@ -82,7 +82,7 @@ export default function CreatePontModal({
         </div>
 
         {/* Informações da posição */}
-        <div className="mb-4 text-sm text-gray-700">
+        <div className="mb-4 text-sm text-muted-foreground bg-secondary/50 p-3 rounded-lg border border-border">
           <strong>Latitude:</strong> {latitude.toFixed(5)} <br />
           <strong>Longitude:</strong> {longitude.toFixed(5)}
         </div>
@@ -95,13 +95,13 @@ export default function CreatePontModal({
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             required
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-border bg-background text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
           />
           <textarea
             placeholder="Descrição (opcional)"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border border-border bg-background text-foreground placeholder:text-muted-foreground rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
             rows={3}
           />
 
@@ -110,7 +110,7 @@ export default function CreatePontModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 btn-hover-secondary"
+              className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
             >
               Cancelar
             </button>
@@ -118,7 +118,7 @@ export default function CreatePontModal({
             <button
               type="submit"
               disabled={loading || !nome.trim()}
-              className="px-4 py-2 text-sm rounded-lg bg-[rgb(var(--primary))] text-white hover:opacity-90 disabled:opacity-50 btn-hover-primary"
+              className="px-4 py-2 text-sm rounded-lg bg-primary text-white hover:opacity-90 disabled:opacity-50 btn-hover-primary transition-all"
             >
               {loading ? "Criando..." : "Adicionar Ponto"}
             </button>

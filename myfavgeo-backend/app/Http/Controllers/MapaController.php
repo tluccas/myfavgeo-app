@@ -7,6 +7,8 @@ use App\DTOs\UpdateMapaDTO;
 use App\Http\Requests\RequestStoreMapa;
 use App\Http\Requests\UpdateMapaRequest;
 use App\Services\MapaService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class MapaController extends Controller
 {
@@ -40,14 +42,15 @@ class MapaController extends Controller
     */
     public function index()
     {
-        $mapa = $this->mapaService->listarMapas();
+
+        $mapa = $this->mapaService->listarMapas(Auth::id());
         return $this->sendResponse($mapa, 'Mapas recuperados com sucesso.');
     }
 
     public function store(RequestStoreMapa $request)
     {
         $dto = MapaDTO::fromRequest($request->validated());
-        $mapa = $this->mapaService->criarMapa($dto);
+        $mapa = $this->mapaService->criarMapa($dto, Auth::id());
 
         if (!$mapa) {
             return $this->sendError('Erro ao criar o mapa.', [], 500);
@@ -58,34 +61,34 @@ class MapaController extends Controller
 
     public function show(string $id)
     {
-        $mapa = $this->mapaService->buscarMapaPorId((int)$id);
-        if (!$mapa) {
-            return $this->sendError('Mapa não encontrado.', [], 404);
-        }
+        $mapa = $this->mapaService->buscarMapaPorId((int) $id);
+
+        $this->authorize('view', $mapa);
+
         return $this->sendResponse($mapa, 'Mapa recuperado com sucesso.');
     }
 
     public function update(UpdateMapaRequest $request, string $id)
     {
-        $dto = UpdateMapaDTO::fromRequest($request->validated());
-        $mapa = $this->mapaService->atualizarMapa((int)$id, $dto);
+        $mapa = $this->mapaService->buscarMapaPorId((int) $id);
 
-        if (!$mapa) {
-            return $this->sendError('Erro ao atualizar o mapa.', [], 500);
-        }
+        $this->authorize('update', $mapa);
+
+        $dto = UpdateMapaDTO::fromRequest($request->validated());
+
+        $mapa = $this->mapaService->atualizarMapa($mapa, $dto);
 
         return $this->sendResponse($mapa, 'Mapa atualizado com sucesso.');
     }
 
     public function destroy(string $id)
     {
-        $deletado = $this->mapaService->deletarMapa((int)$id);
+        $mapa = $this->mapaService->buscarMapaPorId((int) $id);
 
-        if (!$deletado) {
-            return $this->sendError('Erro ao deletar o mapa.', [], 500);
-        }
+        $this->authorize('delete', $mapa);
+
+        $this->mapaService->deletarMapa($mapa);
 
         return $this->sendResponse(null, 'Mapa deletado com sucesso.');
     }
-
 }

@@ -11,7 +11,7 @@ export function Hero() {
           mx-auto
           w-full
           rounded-2xl
-          bg-[url('/abillion-TefCcU-33MM-unsplash.jpg')]
+          bg-[url('backgrounds/abillion-TefCcU-33MM-unsplash.jpg')]
           bg-cover
           bg-center
           bg-fixed

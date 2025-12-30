@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Swagger\Schemas;
+
 /**
  * @OA\Schema(
  *   schema="ApiSuccess",
@@ -10,6 +12,7 @@
  *   @OA\Property(property="message", type="string", example="Operação realizada com sucesso"),
  *   @OA\Property(
  *     property="data",
+ *     type="object",
  *     nullable=true,
  *     description="Payload de resposta"
  *   )

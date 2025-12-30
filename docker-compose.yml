@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: myfavgeo-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myfavgeo_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build: ./myfavgeo-backend
+    container_name: myfavgeo-backend
+    env_file:
+      - ./myfavgeo-backend/.env
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+    volumes:
+      - ./myfavgeo-backend:/var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./myfavgeo-frontend
+    container_name: myfavgeo-frontend
+    env_file:
+      - ./myfavgeo-frontend/.env.docker
+    volumes:
+      - ./myfavgeo-frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:

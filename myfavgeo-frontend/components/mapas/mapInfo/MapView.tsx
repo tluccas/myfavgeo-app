@@ -39,6 +39,7 @@ export default function MapView({
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mapaNome, setMapaNome] = useState("");
   const mapaRef = useRef<LeafletMap>(null);
+  const isFirstLoad = useRef(true);
 
   // Busca de pontos
   const fetchPontos = useCallback(async () => {
@@ -49,9 +50,10 @@ export default function MapView({
       // Ajustar conforme a estrutura da resposta se mudar (Já está OK)
       setPontos(res.data.data?.pontos);
 
-      if (res.data.data?.pontos.length > 0) {
+      if (isFirstLoad.current && res.data.data?.pontos.length > 0) {
         focusOnPonto(res.data.data.pontos[0]);
         setIsSidebarOpen(false);
+        isFirstLoad.current = false;
       }
     } catch (error) {
       console.error("Erro ao buscar pontos:", error);

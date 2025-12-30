@@ -24,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->is('api/*')) {
-                return response()->json(['message' => 'Não Authenticado.'], 401);
+                return response()->json(['message' => 'Não Autenticado.'], 401);
             }
         });
     })->create();

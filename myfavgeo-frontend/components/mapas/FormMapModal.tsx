@@ -1,18 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "@/lib/api";
+import { MapaDTO } from "@/lib/types/types";
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
+  mapa?: MapaDTO | null;
 };
 
-export default function CreateMapModal({ open, onClose }: Props) {
+export default function FormMapModal({
+  open,
+  onClose,
+  onSuccess,
+  mapa,
+}: Props) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [urlImagem, setUrlImagem] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      if (mapa) {
+        setNome(mapa.nome);
+        setDescricao(mapa.descricao);
+        setUrlImagem(mapa.url_imagem || "");
+      } else {
+        setNome("");
+        setDescricao("");
+        setUrlImagem("");
+      }
+    }
+  }, [open, mapa]);
 
   if (!open) return null;
 
@@ -24,25 +46,40 @@ export default function CreateMapModal({ open, onClose }: Props) {
     try {
       setLoading(true);
 
-      await api.post("/mapas", {
+      const payload = {
         nome: nome.trim(),
         descricao: descricao.trim() || null,
         url_imagem: urlImagem.trim() || null,
-      });
+      };
 
-      onClose();
-      setNome("");
-      setDescricao("");
-      setUrlImagem("");
+      if (mapa) {
+        await api.put(`/mapas/${mapa.id}`, payload);
+      } else {
+        await api.post("/mapas", payload);
+      }
+
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        onClose();
+      }
+
+      if (!mapa) {
+        setNome("");
+        setDescricao("");
+        setUrlImagem("");
+      }
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-1200 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
-        <h2 className="text-xl font-bold mb-4">Criar novo mapa</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {mapa ? "Editar mapa" : "Criar novo mapa"}
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Nome */}
@@ -89,7 +126,13 @@ export default function CreateMapModal({ open, onClose }: Props) {
               disabled={loading || !nome.trim()}
               className="px-4 py-2 text-sm rounded-lg bg-primary text-white hover:opacity-90 disabled:opacity-50 btn-hover-primary transition-all"
             >
-              {loading ? "Criando..." : "Criar mapa"}
+              {loading
+                ? mapa
+                  ? "Salvando..."
+                  : "Criando..."
+                : mapa
+                ? "Salvar alterações"
+                : "Criar mapa"}
             </button>
           </div>
         </form>

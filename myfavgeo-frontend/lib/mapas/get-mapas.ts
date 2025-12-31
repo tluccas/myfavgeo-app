@@ -8,7 +8,7 @@ export async function getMapas(): Promise<APIResponse<MapaDTO[]>> {
   }
 
   const res = await fetch(
-    `${process.env.API_URL || "http://localhost:8000/api"}/mapas`,
+    `${process.env.NEXT_PUBLIC_API_URL || ""}/mapas`,
     {
       headers: {
         Cookie: `token=${cookie.value}`,

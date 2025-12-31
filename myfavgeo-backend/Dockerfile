@@ -14,9 +14,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Instala dependências PHP
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 COPY . .
+
+RUN php artisan package:discover --ansi
 
 EXPOSE 8000
 

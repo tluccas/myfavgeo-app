@@ -5,7 +5,7 @@ export async function getAuthUser() {
   if (!token) return null;
 
   const res = await fetch(
-    `${process.env.API_URL || "http://localhost:8000/api"}/me`,
+    `${process.env.NEXT_PUBLIC_API_URL || ""}/me`,
     {
       headers: {
         // Envia o token de autenticação via cookie para o backend

@@ -10,8 +10,8 @@ use OpenApi\Annotations as OA;
  *     title="MyFavGeo API",
  *     version="1.0.0",
  *     description="API REST do MyFavGeo para gerenciamento de mapas e pontos geográficos desenvolvido para o desafio técnico da vaga para Intern Software Developer na NerdMonster.
- *     Linguagem: PHP 8.5.1
- *     Framework: Laravel 12.44
+ *     Linguagem: PHP 8.2
+ *     Framework: Laravel 12.0
  *     Autenticação: JWT (JSON Web Token)
  *     Documentação: Swagger / OpenAPI 3.0
  *     Banco de Dados: MySQL / MariaDB"

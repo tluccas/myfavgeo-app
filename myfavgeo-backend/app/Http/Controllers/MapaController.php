@@ -215,7 +215,7 @@ class MapaController extends Controller
      *   ),
      * 
      *   @OA\Response(
-     *     response=201,
+     *     response=200,
      *     description="Mapa atualizado com sucesso",
      *     @OA\JsonContent(
      *       allOf={

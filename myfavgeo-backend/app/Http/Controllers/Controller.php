@@ -8,7 +8,7 @@ abstract class Controller
 {
     use AuthorizesRequests;
 
-    protected function sendResponse($result, $message)
+    protected function sendResponse($result, $message, $code = 200)
     {
         $response = [
             'success' => true,
@@ -16,7 +16,7 @@ abstract class Controller
             'data' => $result,
         ];
 
-        return response()->json($response, 200);
+        return response()->json($response, $code);
     }
 
     protected function sendError($error, $errorMessages = [], $code = 404)

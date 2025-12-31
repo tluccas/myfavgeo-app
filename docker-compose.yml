@@ -23,7 +23,7 @@ services:
     container_name: myfavgeo-backend
     env_file:
       - ./myfavgeo-backend/.env.docker
-    command: sh -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
+    command: sh -c "php artisan migrate:fresh --seed --force && php artisan serve --host=0.0.0.0 --port=8000"
 
     volumes:
       - ./myfavgeo-backend:/var/www

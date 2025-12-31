@@ -1,21 +1,22 @@
 FROM php:8.3-cli
 
-## Dependencias do sistema
+WORKDIR /var/www
+
+# Dependências do sistema
 RUN apt-get update && apt-get install -y \
     git \
-    unzip \ 
+    unzip \
     libzip-dev \
-    && docker-php-ext-install zip pdo pdo_mysql
+ && docker-php-ext-install zip pdo pdo_mysql
 
-## Composer
-
+# Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/
+# Instala dependências PHP
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
 
 COPY . .
-
-RUN composer install
 
 EXPOSE 8000
 

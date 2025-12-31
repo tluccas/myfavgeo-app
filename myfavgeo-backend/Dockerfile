@@ -20,6 +20,10 @@ COPY . .
 
 RUN php artisan package:discover --ansi
 
+# Espera o MySQL e sobe o backend
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

@@ -7,6 +7,7 @@ use App\Http\Requests\PontoStoreRequest;
 use App\Http\Requests\PontoUpdateRequest;
 use App\DTOs\UpdatePontoDTO;
 use App\Services\PontoService;
+use App\Models\Mapa;
 
 
 class PontoController extends Controller
@@ -37,7 +38,6 @@ class PontoController extends Controller
      *       required={"nome", "latitude", "longitude", "mapa_id"},
      *       @OA\Property(property="nome", type="string", example="Praça Central"),
      *       @OA\Property(property="descricao", type="string", example="Ponto de encontro no centro da cidade", nullable=true),
-     *       @OA\Property(property="url_imagem", type="string", example="https://exemplo.com/imagens/praca-central.jpg", nullable=true),
      *       @OA\Property(property="latitude", type="number", format="float", example=-23.55052),
      *       @OA\Property(property="longitude", type="number", format="float", example=-46.633308),
      *       @OA\Property(property="mapa_id", type="integer", example=6)
@@ -82,6 +82,10 @@ class PontoController extends Controller
      */
     public function store(PontoStoreRequest $request)
     {
+        // Verifica se o mapa pertence ao usuário autenticado
+        $mapa = Mapa::findOrFail($request->mapa_id);
+        $this->authorize('update', $mapa);
+
         $dto = PontoDTO::fromRequest($request->validated());
         $ponto = $this->pontoService->criarPonto($dto);
 

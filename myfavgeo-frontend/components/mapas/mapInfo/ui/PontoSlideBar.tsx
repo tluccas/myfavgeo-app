@@ -6,6 +6,7 @@ type PointsSidebarProps = {
   pontos: PontoDTO[];
   onEdit: (ponto: PontoDTO) => void;
   onDelete: (pontoId: number) => void;
+  onDeleteAll: () => void;
   onSelect: (ponto: PontoDTO) => void;
   isOpen: boolean;
   onClose: () => void;
@@ -16,6 +17,7 @@ export default function PontoSlideBar({
   pontos,
   onEdit,
   onDelete,
+  onDeleteAll,
   onSelect,
   isOpen,
   onClose,
@@ -46,10 +48,10 @@ export default function PontoSlideBar({
               Pontos salvos: {pontos.length}
             </h4>
           </div>
-          {/* Botão de fechar visível apenas mobile */}
+          {/* Botão de fechar */}
           <button
             onClick={onClose}
-            className="md:hidden p-2 -mt-1 text-gray-500 hover:text-black"
+            className="p-2 -mt-1 text-gray-500 hover:text-black"
           >
             <i className="bi bi-x-lg text-xl"></i>
           </button>
@@ -108,6 +110,19 @@ export default function PontoSlideBar({
             </li>
           ))}
         </ul>
+
+        {/* Botão de deletar todos */}
+        {pontos.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-gray-300">
+            <button
+              onClick={onDeleteAll}
+              className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition-colors text-sm font-medium"
+            >
+              <i className="bi bi-trash-fill"></i>
+              Deletar todos os pontos
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

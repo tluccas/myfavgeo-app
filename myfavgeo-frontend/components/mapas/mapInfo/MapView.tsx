@@ -13,6 +13,7 @@ import PontoSlideBar from "./ui/PontoSlideBar";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import Loading from "@/app/loading";
+import toast from "react-hot-toast";
 
 // Configuração dos ícones padrão do Leaflet (Correção de ícones quebrados)
 L.Icon.Default.mergeOptions({
@@ -128,8 +129,9 @@ export default function MapView({
     try {
       await api.delete(`/pontos/${pontoId}`);
       setPontos((prev) => prev.filter((p) => p.id !== pontoId));
-    } catch (error) {
-      console.error("Erro ao deletar ponto:", error);
+      toast.success("Ponto excluído com sucesso!");
+    } catch{
+      toast.error("Não foi possível excluir o ponto");
     }
   };
 
@@ -146,9 +148,10 @@ export default function MapView({
       await Promise.all(
         pontos.map((ponto) => api.delete(`/pontos/${ponto.id}`))
       );
+      toast.success("Todos os pontos foram excluídos com sucesso!");
       setPontos([]);
-    } catch (error) {
-      console.error("Erro ao deletar todos os pontos:", error);
+    } catch{
+      toast.error("Não foi possível excluir todos os pontos");
     } finally {
       setLoading(false);
     }

@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import api from "@/lib/api";
 import L from "leaflet";
+import { PontoDTO } from "@/lib/types/types";
+import toast from "react-hot-toast";
 
 // Configura ícones padrão do Leaflet (para não quebrar o marker)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,14 +20,16 @@ L.Icon.Default.mergeOptions({
 type Props = {
   open: boolean;
   onClose: () => void;
+  ponto?: PontoDTO | null;
   latitude: number;
   longitude: number;
   mapa_id: number;
 };
 
-export default function CreatePontModal({
+export default function FormPontModal({
   open,
   onClose,
+  ponto,
   latitude,
   longitude,
   mapa_id,
@@ -34,7 +38,17 @@ export default function CreatePontModal({
   const [descricao, setDescricao] = useState("");
   const [loading, setLoading] = useState(false);
 
-  if (!open) return null;
+  useEffect(() => {
+    if (open) {
+      if (ponto) {
+        setNome(ponto.nome);
+        setDescricao(ponto.descricao || "");
+      } else {
+        setNome("");
+        setDescricao("");
+      }
+    }
+  }, [ponto, open]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -42,6 +56,18 @@ export default function CreatePontModal({
 
     try {
       setLoading(true);
+      if (ponto) {
+        await api.put(`/pontos/${ponto.id}`, {
+          nome: nome.trim(),
+          descricao: descricao.trim() || null,
+          latitude,
+          longitude,
+          mapa_id,
+        });
+        toast.success("Ponto atualizado com sucesso!");
+        onClose();
+        return;
+      }
       await api.post("/pontos", {
         nome: nome.trim(),
         descricao: descricao.trim() || null,
@@ -49,17 +75,20 @@ export default function CreatePontModal({
         longitude,
         mapa_id,
       });
-
+      toast.success("Ponto criado com sucesso!");
       onClose();
       setNome("");
       setDescricao("");
-    } finally {
+    } catch {
+      toast.error("Erro ao salvar ponto");
+    }
+    finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-1200 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-background text-foreground rounded-2xl w-full max-w-md p-6 border border-border shadow-xl">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
           <i className="bi bi-geo-fill text-primary"></i> Adicionar novo ponto
@@ -120,7 +149,11 @@ export default function CreatePontModal({
               disabled={loading || !nome.trim()}
               className="px-4 py-2 text-sm rounded-lg bg-primary text-white hover:opacity-90 disabled:opacity-50 btn-hover-primary transition-all"
             >
-              {loading ? "Criando..." : "Adicionar Ponto"}
+              {loading ?
+                ponto ? "Salvando..." :
+              "Criando..." : 
+              ponto ? "Editar Ponto" :
+              "Adicionar novo Ponto"}
             </button>
           </div>
         </form>

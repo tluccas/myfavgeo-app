@@ -15,7 +15,7 @@ export default function HeaderClient({ user }: Props) {
   const handleLogout = async () => {
     try {
       await api.post("/logout");
-      // Força recarregamento para limpar estado do servidor (corrigindo de parecer estar logado no header)
+      // Força recarregamento para limpar estado do servidor
       window.location.href = "/";
     } catch (error) {
       console.error("Erro ao fazer logout", error);
@@ -30,7 +30,10 @@ export default function HeaderClient({ user }: Props) {
           <div className="flex items-center gap-4">
             <span className="text-sm font-medium flex items-center gap-2">
               <i className="bi bi-person-circle text-lg"></i>
-              <span>Olá, {user.nome}</span>
+              <span>
+                Olá, 
+                <strong className="font-bold select-none"> {user.nome}</strong>
+              </span>
             </span>
             <button
               onClick={handleLogout}

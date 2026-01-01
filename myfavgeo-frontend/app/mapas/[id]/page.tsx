@@ -1,4 +1,10 @@
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Seu Mapa",
+  description: "Visualize e gerencie os pontos do seu mapa favorito",
+};
 
 type MapPageProps = {
   params: {

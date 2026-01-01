@@ -12,7 +12,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MyFavGeo",
+  title: {
+    default: "MyFavGeo",
+    template: "%s | MyFavGeo",
+  },
   description: "Aplicação de mapas favoritos",
 };
 

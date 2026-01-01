@@ -66,7 +66,7 @@ export default function PontoSlideBar({
               {/* Nome */}
               <span className="flex items-center shrink-0 font-medium max-w-100px sm:max-w-120px">
                 <Image
-                  src={ponto.url_imagem || "/favicon.ico"}
+                  src={"/favicon.ico"}
                   alt={ponto.nome}
                   width={20}
                   height={20}

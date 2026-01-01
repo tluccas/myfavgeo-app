@@ -6,10 +6,13 @@ import { Map as LeafletMap } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MapClickHandle from "./event/MapClickHandle";
 import L from "leaflet";
-import CreatePontModal from "./ui/CreatePontoModal";
+import FormPontoModal from "./ui/FormPontoModal";
 import { PontoDTO } from "@/lib/types/types";
 import api from "@/lib/api";
 import PontoSlideBar from "./ui/PontoSlideBar";
+import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
+import Loading from "@/app/loading";
 
 // Configuração dos ícones padrão do Leaflet (Correção de ícones quebrados)
 L.Icon.Default.mergeOptions({
@@ -30,6 +33,9 @@ export default function MapView({
   zoom = 13,
   mapaId,
 }: MapViewProps) {
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState<boolean | null>(null);
+
   const [clickedPosition, setClickedPosition] = useState<
     [number, number] | null
   >(null);
@@ -38,16 +44,36 @@ export default function MapView({
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mapaNome, setMapaNome] = useState("");
+  const [ponto, setPonto] = useState<PontoDTO | null>(null);
   const mapaRef = useRef<LeafletMap>(null);
   const isFirstLoad = useRef(true);
 
+  // Validação de acesso ao mapa
+  useEffect(() => {
+    async function validateAccess() {
+      try {
+        await api.get(`/mapas/${mapaId}`);
+        setAuthorized(true);
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          const status = error.response?.status;
+          if (status === 403 || status === 404) {
+            router.replace("/mapas"); // redireciona para lista se não autorizado
+          } else if (status === 401) {
+            router.replace("/login"); // redireciona para login se não autenticado
+          }
+        }
+      }
+    }
+    validateAccess();
+  }, [mapaId, router]);
+
   // Busca de pontos
   const fetchPontos = useCallback(async () => {
+    if (!authorized) return; // só busca se permitido
     try {
       setLoading(true);
-
       const res = await api.get(`/mapas/${mapaId}`);
-      // Ajustar conforme a estrutura da resposta se mudar (Já está OK)
       setPontos(res.data.data?.pontos);
 
       if (isFirstLoad.current && res.data.data?.pontos.length > 0) {
@@ -60,7 +86,7 @@ export default function MapView({
     } finally {
       setLoading(false);
     }
-  }, [mapaId]);
+  }, [mapaId, authorized]);
 
   // Função para focar em um ponto selecionado
   function focusOnPonto(ponto: PontoDTO) {
@@ -92,7 +118,9 @@ export default function MapView({
   // Handlers
   // Atualizar modal para aceitar edição de ponto (apenas Nome e Descrição)
   const handleEdit = (ponto: PontoDTO) => {
-    console.log("Editar ponto:", ponto);
+    setClickedPosition([ponto.latitude, ponto.longitude]);
+    setIsModalOpen(true);
+    setPonto(ponto);
   };
 
   const handleDelete = async (pontoId: number) => {
@@ -105,6 +133,27 @@ export default function MapView({
     }
   };
 
+  const handleDeleteAll = async () => {
+    if (
+      !confirm(
+        "Tem certeza que deseja excluir TODOS os pontos deste mapa? Esta ação não pode ser desfeita."
+      )
+    )
+      return;
+    try {
+      setLoading(true);
+      // Deleta todos os pontos um por um
+      await Promise.all(
+        pontos.map((ponto) => api.delete(`/pontos/${ponto.id}`))
+      );
+      setPontos([]);
+    } catch (error) {
+      console.error("Erro ao deletar todos os pontos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleMapClick = (lat: number, lng: number) => {
     setClickedPosition([lat, lng]);
     setIsModalOpen(true);
@@ -113,8 +162,14 @@ export default function MapView({
   const handleModalClose = () => {
     setIsModalOpen(false);
     setClickedPosition(null); // Limpa o marcador temporário ao fechar
+    setPonto(null);
     fetchPontos(); // Recarrega a lista
   };
+
+  if (authorized === null) {
+    return <Loading />;
+  }
+
   return (
     <div className="relative w-full h-[calc(100vh-4rem)] overflow-hidden">
       {/* Caixa de instrução */}
@@ -193,6 +248,7 @@ export default function MapView({
         onClose={() => setIsSidebarOpen(false)}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onDeleteAll={handleDeleteAll}
         onSelect={(ponto) => {
           focusOnPonto(ponto);
           setIsSidebarOpen(false);
@@ -201,9 +257,10 @@ export default function MapView({
 
       {/* Modal de Criação */}
       {isModalOpen && clickedPosition && (
-        <CreatePontModal
+        <FormPontoModal
           open={isModalOpen}
           onClose={handleModalClose}
+          ponto={ponto ?? null}
           latitude={clickedPosition[0]}
           longitude={clickedPosition[1]}
           mapa_id={mapaId}

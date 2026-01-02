@@ -4,6 +4,12 @@ import { MapsHeader } from "@/components/mapas/MapsHeader";
 import { BackgroundBlobs } from "@/components/layout/Home/BackgroundBlobs";
 import { getMapas } from "@/lib/mapas/get-mapas";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Meus Mapas",
+  description: "Lista de mapas do usuário",
+};
 
 export default async function MapasPage() {
   let response;

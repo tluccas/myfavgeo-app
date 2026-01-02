@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -11,7 +12,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MyFavGeo",
+  title: {
+    default: "MyFavGeo",
+    template: "%s | MyFavGeo",
+  },
   description: "Aplicação de mapas favoritos",
 };
 
@@ -32,6 +36,9 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
+            <Toaster 
+              position="bottom-right"
+            />
             <Footer />
           </div>
         </ThemeProvider>

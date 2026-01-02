@@ -19,7 +19,6 @@ export interface PontoDTO{
     descricao: string,
     latitude: number,
     longitude: number,
-    url_imagem?: string,
     mapa_id: number,
     created_at: string,
     updated_at: string,

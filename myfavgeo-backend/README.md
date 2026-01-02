@@ -6,7 +6,7 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 
-API REST desenvolvida em **Laravel 11** responsável por gerenciar toda a lógica de negócio, autenticação e persistência de dados do ecossistema MyFavGeo.
+API REST desenvolvida em **Laravel 12** responsável por gerenciar toda a lógica de negócio, autenticação e persistência de dados do ecossistema MyFavGeo.
 
 ---
 

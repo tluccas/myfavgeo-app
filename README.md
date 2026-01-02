@@ -91,7 +91,7 @@ Para facilitar a sua avaliação, o sistema já inicia com um usuário de teste 
 ## 🛠️ Stack Tecnológica e Decisões
 [![Backend Docs](https://img.shields.io/badge/Backend-README-FF2D20?style=for-the-badge&logo=laravel)](./myfavgeo-backend/README.md)
 [![Frontend Docs](https://img.shields.io/badge/Frontend-README-000000?style=for-the-badge&logo=next.js)](./myfavgeo-frontend/README.md)
-### Backend (Laravel 12 + PHP 8.3)
+### Backend (Laravel 12 + PHP 8.2^)
 
 Optei por uma arquitetura pensando em uma aplicação real com base em minhas experiências, indo além do básico:
 
@@ -212,5 +212,6 @@ MyFavGeo-App/
 
 Feito com 💜 e muito café por [Lucas Alves](https://www.linkedin.com/in/lucasalvesz/).
 Espero que gostem do resultado! :) 🚀
+
 
 

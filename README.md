@@ -55,7 +55,11 @@ cd MyFavGeo-App
 2. Suba o ambiente com um único comando:
 
 ```bash
+## Opção 1: Para rodar com terminal livre
 docker-compose up -d --build
+
+## Opção 2: Para acompanhar todo o processo com os logs
+docker-compose up --build
 ```
 
 3. Aguarde alguns instantes para os containers iniciarem e o banco de dados ser populado.
@@ -85,7 +89,8 @@ Para facilitar a sua avaliação, o sistema já inicia com um usuário de teste 
 ---
 
 ## 🛠️ Stack Tecnológica e Decisões
-
+[![Backend Docs](https://img.shields.io/badge/Backend-README-FF2D20?style=for-the-badge&logo=laravel)](./myfavgeo-backend/README.md)
+[![Frontend Docs](https://img.shields.io/badge/Frontend-README-000000?style=for-the-badge&logo=next.js)](./myfavgeo-frontend/README.md)
 ### Backend (Laravel 11 + PHP 8.3)
 
 Optei por uma arquitetura pensando em uma aplicação real com base em minhas experiências, indo além do básico:
@@ -103,6 +108,44 @@ Uma interface moderna e responsiva:
 - **Mapas Interativos:** Integração com **Leaflet** e OpenStreetMap como sugerido.
 - **UI/UX:** Design responsivo (Mobile First) estilizado com **Tailwind CSS**.
 - **Feedback Visual:** Modais, Loadings e tratamento de erros amigável.
+
+### Estrutura de Dados e Relacionamentos (MySQL/MariaDB)
+
+A arquitetura do banco de dados segue um modelo relacional, onde o usuário é o proprietário dos mapas e cada mapa agrupa diversos pontos geográficos.
+
+- **Usuários** `users`: Relacionamento -> Possui muitos (`HasMany`) _**Mapas**_. | **Segurança:** A senha é criptografada via Mutator (`bcrypt`)
+- **Mapas** `mapas`: Relacionamento -> Pertence a (`BelongsTo`) um **_Usuário_** e possui muitos (`HasMany`) **_Pontos_**. | **Funcionalidade:** Inclui lógica para formatação automática de nomes e tratamento de URLs de imagem.
+- **Pontos** `pontos`: Relacionamento -> Pertence a (`BelongsTo`) um _Mapa_. | **Atributos:** Armazena `latitude` e `longitude` como _floats_ para precisão de geolocalização.
+
+```mermaid
+erDiagram
+    USER ||--o{ MAPA : "possui"
+    MAPA ||--o{ PONTO : "contém"
+
+    USER {
+        int id PK
+        string nome
+        string email
+        string password
+    }
+
+    MAPA {
+        int id PK
+        int user_id FK
+        string nome
+        string descricao
+        string url_imagem
+    }
+
+    PONTO {
+        int id PK
+        int mapa_id FK
+        string nome
+        string descricao
+        float latitude
+        float longitude
+    }
+```
 
 ### Infraestrutura (Docker)
 
